@@ -1,13 +1,12 @@
-import rawData from "./rawData";
+const importedDataFile = require('./rawData');
 
 
 //filtrerar rådatan lite:
-const data = JSON.parse(rawData);
+const data = JSON.parse(importedDataFile.rawData);
 const galleriHelgenFullData = data[1];
 const galleriKategorier = galleriHelgenFullData[6];
-const gallerierOchUtställningsRum = galleriKategorier[0];
-const popUp = galleriKategorier[1];
-const allaUtställare = gallerierOchUtställningsRum + popUp;
+const gallerierOchUtställningsRum = galleriKategorier[0][4];
+const popUp = galleriKategorier[1][4];
 
 
 //hjälpmetoder:
@@ -19,7 +18,7 @@ function getRandomBoolean(): boolean {
 }
 
 //fixar egna typer:
-enum galleriTyp {galleri = 'Gallerier och utställningsrum', popup = 'Popup'}
+enum GalleriTyp {galleri = 'Gallerier och utställningsrum', popup = 'Popup'}
 
 enum genre {modern = 'Modern konst', klassisk = 'Klassisk konst', performance = 'Performance-konst', feministisk = 'Feministisk konst', ljud = 'Ljudkonst', övrigt = 'Övrigt'};
 function getRandomGenre(): genre {
@@ -43,9 +42,18 @@ function getRandomOpeningHours(): öppetTider {
 }
 
 
+//the one type to rule them all:
+type utställare = {
+  namn: String,
+  koordinater: any,
+  galleriTyp: GalleriTyp, 
+  öppetTider: öppetTider,
+  genre: genre,
+  serverarMat: boolean,
+  serveringsTillstånd: boolean
+}
 
-//hjälpmetod till när vi ska skapa objekt av datan
-function skapaUtställare(namn: String, koordinater: Array<number>, galleriTyp: galleriTyp, öppetTider: öppetTider, genre: genre, serverarMat: boolean, serveringsTillstånd: boolean) { 
+function skapaUtställare(namn: String, koordinater: any, galleriTyp: GalleriTyp, öppetTider: öppetTider, genre: genre, serverarMat: boolean, serveringsTillstånd: boolean): utställare { 
     return { 
       namn: namn,
       koordinater: koordinater,
@@ -59,42 +67,34 @@ function skapaUtställare(namn: String, koordinater: Array<number>, galleriTyp: 
 
 
 
-/* skapar objekt:
+//skapar utställarobjekt:
+let galleriUtställare: utställare[] = [];
+let popUpUtställare: utställare[] = [];
 
-for (const utställare in gallerierOchUtställningsRum) {
-  const namn = 
-  const koordinater = [1,2]
-  const galleriTypen = galleriTyp.galleri;
-  const öppetTider = getRandomOpeningHours;
-  const genre = getRandomGenre;
-  const serverarMat = getRandomBoolean;
-  const serveringsTillstånd = getRandomBoolean;
-  skapaUtställare()
-  
-}
-for (const utställare in popUp) {
-  let randomInt = getRandomInt(25) 
-  const öppetTider = allaÖppetTider[randomInt];
-  const genre = _.sample(Object.values(genre))
-  skapaUtställare()
-  
-}
+gallerierOchUtställningsRum.forEach((utställare: any[]) => {
+  const namn = utställare[5][0][0];
+  const koordinater = JSON.parse(utställare[4][4]);
+  const galleriTyp = GalleriTyp.galleri;
+  const öppetTider = getRandomOpeningHours();
+  const genre = getRandomGenre();
+  const serverarMat = getRandomBoolean();
+  const serveringsTillstånd = getRandomBoolean();
 
+  galleriUtställare.push(skapaUtställare(namn, koordinater, galleriTyp, öppetTider, genre, serverarMat, serveringsTillstånd));  
+});
 
-*/
+popUp.forEach((utställare: any[]) => {
+  const namn = utställare[5][0][0];
+  const koordinater = JSON.parse(utställare[4][4]);
+  const galleriTyp = GalleriTyp.galleri;
+  const öppetTider = getRandomOpeningHours();
+  const genre = getRandomGenre();
+  const serverarMat = getRandomBoolean();
+  const serveringsTillstånd = getRandomBoolean();
 
-//skapa listor och typer: koordinater, gallerityp, 
-//skapa objekt som håller alla med namn som nyckel
-//lägg in grejerna ovan (koordinater, osv)
-//skapa typer: 
+  popUpUtställare.push(skapaUtställare(namn, koordinater, galleriTyp, öppetTider, genre, serverarMat, serveringsTillstånd));
+});
 
+const allaUtställare = galleriUtställare.concat(popUpUtställare)
 
-
-/*
-for(const category of data[1][6]){
-  console.log(category[2]);
-  for(const pin of category[4]){
-    console.log(`\t ${pin[5][0][0]} ${pin[4][0][1]}`);
-  }
-}
-*/
+console.log(JSON.stringify(allaUtställare))
