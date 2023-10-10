@@ -1,0 +1,13 @@
+<mat-drawer mode="side" opened="true">
+  <mat-toolbar color="primary">
+    Filter Options
+  </mat-toolbar>
+  <form>
+    <mat-list>
+      <mat-list-item *ngFor="let option of filterOptions">
+        <mat-checkbox [(ngModel)]="option.checked">{{ option.label }}</mat-checkbox>
+      </mat-list-item>
+    </mat-list>
+    <button mat-button color="accent">Apply Filters</button>
+  </form>
+</mat-drawer>
