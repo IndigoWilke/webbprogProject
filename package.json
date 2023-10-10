@@ -23,6 +23,8 @@
     "@mui/icons-material": "^5.14.12",
     "@mui/material": "^5.14.12",
     "leaflet": "^1.9.4",
+    "ngx-mat-timepicker": "^16.0.4",
+    "ngx-material-timepicker": "^13.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
