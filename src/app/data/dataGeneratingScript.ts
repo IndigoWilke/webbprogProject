@@ -1,8 +1,8 @@
-const importedDataFile = require('./rawData');
-
+import * as fs from 'fs'; //for writing to file 
+import rawData from "./rawData";
 
 //filtrerar rådatan lite:
-const data = JSON.parse(importedDataFile.rawData);
+const data = JSON.parse(rawData);
 const galleriHelgenFullData = data[1];
 const galleriKategorier = galleriHelgenFullData[6];
 const gallerierOchUtställningsRum = galleriKategorier[0][4];
@@ -73,7 +73,7 @@ let popUpUtställare: utställare[] = [];
 
 gallerierOchUtställningsRum.forEach((utställare: any[]) => {
   const namn = utställare[5][0][0];
-  const koordinater = JSON.parse(utställare[4][4]);
+  const koordinater = utställare[4][4];
   const galleriTyp = GalleriTyp.galleri;
   const öppetTider = getRandomOpeningHours();
   const genre = getRandomGenre();
@@ -85,7 +85,7 @@ gallerierOchUtställningsRum.forEach((utställare: any[]) => {
 
 popUp.forEach((utställare: any[]) => {
   const namn = utställare[5][0][0];
-  const koordinater = JSON.parse(utställare[4][4]);
+  const koordinater = utställare[4][4];
   const galleriTyp = GalleriTyp.galleri;
   const öppetTider = getRandomOpeningHours();
   const genre = getRandomGenre();
@@ -96,5 +96,11 @@ popUp.forEach((utställare: any[]) => {
 });
 
 const allaUtställare = galleriUtställare.concat(popUpUtställare)
+const jsonizedData = JSON.stringify(allaUtställare, null, 2)
+console.log(jsonizedData);
+const filename = './data.ts'
+fs.writeFileSync(filename, jsonizedData, 'utf-8');
+//^Doesn't work since we are in Angular probably. Need to move to server side but im too tired now, will just manually copy over the data in the meantime.
 
-console.log(JSON.stringify(allaUtställare))
+export default allaUtställare;
+
