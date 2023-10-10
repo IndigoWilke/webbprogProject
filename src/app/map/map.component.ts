@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
+import './map.component.css';
+
 
 @Component({
   selector: 'app-map',
@@ -16,7 +18,7 @@ export class MapComponent implements OnInit, OnChanges {
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
    })
   };
-  @Input() places: { name: string; lat: number; lng: number }[] = [];
+  @Input() places: { name: string; lat: number; lng: number; description: string }[] = [];
 
   private map!: L.Map;
 
@@ -51,7 +53,22 @@ export class MapComponent implements OnInit, OnChanges {
 
       // Add markers based on the updated places array
       this.places.forEach(place => {
-        L.marker([place.lat, place.lng], this.icon).addTo(this.map).bindPopup(place.name);
+        const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map);
+      
+        // Create a custom popup content
+        const popupContent = `
+          <h3>${place.name}</h3>
+          <p>${place.description}</p>
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png" alt="Image" width="100">
+        `;
+    
+        // Bind the custom popup to the marker
+        marker.bindPopup(popupContent);
+    
+        // Open the popup when the marker is clicked
+        marker.on('click', () => {
+          marker.openPopup();
+        });
       });
     }
   }
