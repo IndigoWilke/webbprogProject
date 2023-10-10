@@ -25,10 +25,16 @@
               "src/assets"
             ],
             "styles": [
+<<<<<<< HEAD
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
+=======
+              "node_modules/leaflet/dist/leaflet.css",
+>>>>>>> 0069618656cc1197d78e4cf0d2d2849b22084959
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/leaflet/dist/leaflet.js"
+            ]
           },
           "configurations": {
             "production": {
