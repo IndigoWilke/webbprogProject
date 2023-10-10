@@ -11,11 +11,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MapComponent } from './map/map.component'; 
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
