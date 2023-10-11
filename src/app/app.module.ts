@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { SidebarComponent } from './sidebar/sidebar.component'
+import { FilterComponent } from './filter/filter.component'
+import { GallerypickerComponent } from './gallerypicker/gallery-picker.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,12 +16,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { SidebarContainerComponent } from './sidebar-container/sidebar-container.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
+    FilterComponent,
+    GallerypickerComponent,
+    SidebarContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatExpansionModule,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
