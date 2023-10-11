@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+
+.filter {
+  padding: 10px;
+}
+
+.gallery-picker {
+  padding: 10px;
+}

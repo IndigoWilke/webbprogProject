@@ -1,0 +1,23 @@
+<div class="gallery-picker">
+  <mat-expansion-panel [expanded]="showChecklist">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="gallery-picker-icon" (click)="toggleChecklist()">
+          <mat-icon>place</mat-icon>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="gallery-picker-container">
+      <h3>Choose Gallery:</h3>
+      <form (submit)="submitForm()">
+        <div *ngFor="let gallery of galleryItems">
+          <label>
+            <input type="checkbox" [(ngModel)]="selectedGalleries" [value]="gallery" name="selectedGalleries">
+            {{ gallery }}
+          </label>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </mat-expansion-panel>
+</div>

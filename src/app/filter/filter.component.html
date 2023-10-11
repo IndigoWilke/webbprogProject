@@ -1,0 +1,57 @@
+<div class="filter-sidebar">
+  <mat-expansion-panel [expanded]="isFilterMenuVisible">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <button mat-icon-button (click)="toggleFilterMenu()">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="filter-container">
+      <form (ngSubmit)="applyFilters()">
+        <ng-container *ngFor="let category of filterCategories">
+          <h3>{{ category.name }}</h3>
+          <ng-container *ngIf="category.name === 'Opening Hours'">
+            <mat-form-field appearance="fill">
+              <mat-label>Opening Time</mat-label>
+              <input matInput
+                [formControl]="openingTimeControl"
+                name="openingTime"
+                placeholder="Opening Time (hh:mm)"
+                type="text"
+              />
+              <mat-error *ngIf="openingTimeControl.hasError('invalidTimeFormat') && openingTimeControl.value">
+                Please enter a valid opening time in 'hh:mm' format
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Closing Time</mat-label>
+              <input matInput
+                [formControl]="closingTimeControl"
+                name="closingTime"
+                placeholder="Closing Time (hh:mm)"
+                type="text"
+              />
+              <mat-error *ngIf="closingTimeControl.hasError('invalidTimeFormat') && closingTimeControl.value">
+                Please enter a valid closing time in 'hh:mm' format
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <ng-container *ngIf="category.name !== 'Opening Hours'">
+            <!-- Filter checkboxes here -->
+            <mat-checkbox
+              *ngFor="let option of category.options"
+              [(ngModel)]="option.checked"
+              [name]="option.label"
+            >
+              {{ option.label }}
+            </mat-checkbox>
+          </ng-container>
+        </ng-container>
+        <button mat-button color="accent" type="submit">Apply Filters</button>
+        <button mat-button color="warn" type="button" (click)="clearFilters()">Remove Filters</button>
+      </form>
+    </div>
+  </mat-expansion-panel>
+</div>
