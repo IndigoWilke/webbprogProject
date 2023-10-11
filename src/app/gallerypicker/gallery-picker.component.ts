@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { faMapPin } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
+import { FilterService } from '../filter.service'; 
 
 @Component({
   selector: 'app-gallery-picker',
@@ -7,15 +7,24 @@ import { faMapPin } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./gallery-picker.component.css'],
 })
 
-export class GallerypickerComponent {
-  galleryItems: string[] = ['gallery1', 'gallery2', 'gallery3'];
+export class GallerypickerComponent implements OnInit {
+  galleryItems: any[] = [];
   showChecklist: boolean = false;
   selectedGalleries: string[] = [];
-  faMapPin = faMapPin;
+
+  constructor(private filterService: FilterService) {}
+
+  ngOnInit() {
+    this.filterService.filteredExhibitors$.subscribe((data) => {
+      this.galleryItems = data;
+      console.log('this.galleryItems: ', this.galleryItems);
+    });
+  }
 
   toggleChecklist() {
     this.showChecklist = !this.showChecklist;
   }
+
 
   submitForm() {
     // Handle form submission logic here

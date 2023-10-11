@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FilterComponent } from './filter/filter.component'
 import { GallerypickerComponent } from './gallerypicker/gallery-picker.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { FilterService } from './filter.service';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,7 +43,7 @@ import { SidebarContainerComponent } from './sidebar-container/sidebar-container
     MatInputModule, 
   ],
 
-  providers: [],
+  providers: [FilterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

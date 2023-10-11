@@ -1,6 +1,8 @@
-import { FilterCategory, FilterOption } from './filter.model'; // Import the model
-import { FormControl, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { FilterCategory} from './filter.model'; // Import the model
+import { FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import { exhibitors } from '../data/data';
+import { FilterService } from '.././filter.service';
 
 @Component({
   selector: 'app-filter',
@@ -9,37 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterComponent {
   isFilterMenuVisible = false;
-  galleries = [{
-    name: 'gallery1',
-    type: 'popup',
-    restaurant: true,
-    alcohol: true,
-    opening: '10:00',
-    closing: '18:00',
-  },
-  {
-    name: 'gallery2',
-    type: 'popup',
-    restaurant: true,
-    opening: '10:00',
-    closing: '18:00'
-  },
-  {
-    name: 'gallery1',
-    restaurant: true,
-    type: 'option2',
-    alcohol: true,
-    opening: '10:00',
-    closing: '18:00'
-  },
-  {
-    name: 'gallery1',
-    type: 'popup',
-    restaurant: true,
-    alcohol: true,
-    opening: '12:00',
-    closing: '16:00'
-  }]
+  constructor(private filterService: FilterService) {}
 
   toggleFilterMenu() {
     this.isFilterMenuVisible = !this.isFilterMenuVisible;
@@ -66,8 +38,7 @@ export class FilterComponent {
       name: 'Gallery Type',
       options: [
         { label: 'Popup', checked: false },
-        { label: 'Option 2', checked: false },
-        { label: 'Option 3', checked: false },
+        { label: 'Gallerier och utställningsrum', checked: false },
       ],
     },
     {
@@ -98,13 +69,45 @@ export class FilterComponent {
     this.applyFilters();
   }
 
+  filterExhibitorsByGalleryType(selectedGalleryTypes: string[]): any[] {
+    if (selectedGalleryTypes.length === 0) {
+      return exhibitors;
+    }
+  
+    return exhibitors.filter((exhibitor) => {
+      return selectedGalleryTypes.includes(exhibitor.galleryType);
+    });
+  }
+  
+
   applyFilters() {
-    // Handle filter logic here
     const openingTime = this.openingTimeControl.value;
     const closingTime = this.closingTimeControl.value;
-    console.log('galleries: ', this.galleries)
+  
+    // Extract selected Gallery Types from filterCategories
+    const galleryTypeCategory = this.filterCategories.find((category) => category.name === 'Gallery Type');
+  
+    if (galleryTypeCategory) {
+      const selectedGalleryTypes = galleryTypeCategory.options
+        ?.filter((option) => option.checked)
+        .map((option) => option.label);
+  
+        if (selectedGalleryTypes) {
+          const filteredExhibitors = this.filterExhibitorsByGalleryType(selectedGalleryTypes);
+          this.filterService.setFilteredExhibitors(filteredExhibitors);
+          console.log('Filtered Exhibitors:', filteredExhibitors);
+        } else {
+          // Handle the case where 'options' is not found
+          console.log('No selected Gallery Types');
+        }
+    } else {
+      // Handle the case where 'Gallery Type' category is not found
+      console.log('Gallery Type category not found');
+    }
+  
     console.log("Opening Time:", openingTime);
     console.log("Closing Time:", closingTime);
-    
   }
+  
+  
 }

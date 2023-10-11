@@ -9,7 +9,7 @@
     </mat-expansion-panel-header>
     <div class="gallery-picker-container">
       <h3>Choose Gallery:</h3>
-      <form (submit)="submitForm()">
+      <form (ngSubmit)="submitForm()" #galleryForm="ngForm">
         <div *ngFor="let gallery of galleryItems">
           <label>
             <input type="checkbox" [(ngModel)]="selectedGalleries" [value]="gallery" name="selectedGalleries">
