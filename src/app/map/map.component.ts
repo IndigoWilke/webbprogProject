@@ -82,14 +82,25 @@ export class MapComponent implements OnInit, OnChanges {
         const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map);
 /*       this.places.forEach(place => {
         const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map); */
-      
+        const isFoodServing = place.servesFood;
+        const isAlcoholServing = place.servesAlcoholicBev;
+        
+        let servingInfo = '';
+        if (isFoodServing && isAlcoholServing) {
+          servingInfo = 'Mat- och alkoholservering';
+        } else if (isFoodServing) {
+          servingInfo = 'Matservering';
+        } else if (isAlcoholServing) {
+          servingInfo = 'Alkoholservering';
+        }
         // Create a custom popup content
         const popupContent = `
-          <h3>${place.name}</h3>
+          <h2>${place.name}</h2>
+          <p>Gallerityp: ${place.galleryType}</p>
           <p>Beskrivning: ${place.genre}</p>
-          <p>Öppettider: ${place.open} - ${place.closing}</p>
-          <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png" alt="Image" width="100">
-        `;
+          ${servingInfo ? `<p> ${servingInfo}</p>` : ''}
+          <h4>Öppettider: ${place.open} - ${place.closing}</h4>
+          `;
     
         // Bind the custom popup to the marker
         marker.bindPopup(popupContent);
