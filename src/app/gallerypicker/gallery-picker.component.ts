@@ -18,17 +18,17 @@ export class GallerypickerComponent implements OnInit {
   ngOnInit() {
     this.filterService.filteredExhibitors$
       .subscribe((data) => {
-      this.resetState();
-      this.galleryItems = data.map(item => {
-        return {
-          ...item,
-          checked: this.selectedGalleries.includes(item.name)
-        };
+        this.resetState();
+        this.galleryItems = data.map(item => {
+          return {
+            ...item,
+            checked: this.selectedGalleries.includes(item.name)
+          };
+        });
+        console.log('this.selectedGalleris: ', this.selectedGalleries);
+        console.log('this.galleryItems: ', this.galleryItems);
       });
-      console.log('this.selectedGalleris: ', this.selectedGalleries);
-      console.log('this.galleryItems: ', this.galleryItems);
-    });
-  }
+    }
 
   resetState() {
     const initialState = this.stateService.getCurrentState();
@@ -38,12 +38,30 @@ export class GallerypickerComponent implements OnInit {
 
   toggleChecklist() {
     this.showChecklist = !this.showChecklist;
+    
   }
 
-  submitForm() {
+  showAll() {
+    this.galleryItems.forEach((gallery) => {
+      gallery.checked = true;
+    });
     this.selectedGalleries = this.galleryItems.filter((gallery) => gallery.checked);
     console.log('Selected Galleries:', this.selectedGalleries);
-    
+    this.stateService.updateSelectedGalleries(this.selectedGalleries);
+  }
+  
+  hideAll() {
+    this.galleryItems.forEach((gallery) => {
+      gallery.checked = false;
+    });
+    this.selectedGalleries = this.galleryItems.filter((gallery) => gallery.checked);
+    console.log('Selected Galleries:', this.selectedGalleries);
+    this.stateService.updateSelectedGalleries(this.selectedGalleries);
+  }
+
+  displayGalleries() {
+    this.selectedGalleries = this.galleryItems.filter((gallery) => gallery.checked);
+    console.log('Selected Galleries:', this.selectedGalleries);
     this.stateService.updateSelectedGalleries(this.selectedGalleries);
   } 
 }

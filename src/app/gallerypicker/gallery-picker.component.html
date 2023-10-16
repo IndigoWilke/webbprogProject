@@ -9,15 +9,17 @@
     </mat-expansion-panel-header>
     <div class="gallery-picker-container">
       <h3>Choose Gallery:</h3>
-      <form (ngSubmit)="submitForm()" #galleryForm="ngForm">
-        <div *ngFor="let gallery of galleryItems">
-          <label>
-            <input type="checkbox" [(ngModel)]="gallery.checked" name="selectedGalleries">
+      <div class="gallery-checkbox-container">
+        <div *ngFor="let gallery of galleryItems; let i = index">
+          <mat-checkbox [(ngModel)]="gallery.checked" [name]="gallery.name" (change)="displayGalleries()">
             {{ gallery.name }}
-          </label>
+          </mat-checkbox>
         </div>
-        <button type="submit" (click)="submitForm()">Submit</button>
-      </form>
+      </div>
+      <div class="button-container">
+        <button mat-button (click)="showAll()" class="action-button">Mark all</button>
+        <button mat-button (click)="hideAll()" class="action-button">Unmark all</button>
+      </div>
     </div>
   </mat-expansion-panel>
 </div>
