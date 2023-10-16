@@ -41,7 +41,7 @@ export class FilterComponent {
       ],
     },
     {
-      name: 'Genre', // Add a new filter category for 'Genre'
+      name: 'Genre',
       options: [
         { label: 'Ljudkonst', checked: false },
         { label: 'Klassisk konst', checked: false },

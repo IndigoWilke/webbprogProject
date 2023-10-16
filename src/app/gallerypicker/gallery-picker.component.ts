@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterService } from '../filter.service'; 
 import { StateService } from '../state.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-gallery-picker',
@@ -40,11 +41,9 @@ export class GallerypickerComponent implements OnInit {
   }
 
   submitForm() {
-    this.selectedGalleries = this.galleryItems
-      .filter(gallery => gallery.checked)
-      .map(gallery => gallery.name);
-  
+    this.selectedGalleries = this.galleryItems.filter((gallery) => gallery.checked);
     console.log('Selected Galleries:', this.selectedGalleries);
-  }
-  
+    
+    this.stateService.updateSelectedGalleries(this.selectedGalleries);
+  } 
 }

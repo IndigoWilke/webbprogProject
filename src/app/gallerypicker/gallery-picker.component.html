@@ -12,11 +12,11 @@
       <form (ngSubmit)="submitForm()" #galleryForm="ngForm">
         <div *ngFor="let gallery of galleryItems">
           <label>
-            <input type="checkbox" [(ngModel)]="gallery.checked" name="selectedGalleries">
+            <input type="checkbox" [(ngModel)]="selectedGalleries" [value]="gallery.name" name="selectedGalleries">
             {{ gallery.name }}
           </label>
         </div>
-        <button type="submit" (click)="submitForm()">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   </mat-expansion-panel>

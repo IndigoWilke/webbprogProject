@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { SidebarContainerComponent } from './sidebar-container/sidebar-container.component';
+import { MapComponent } from './map/map.component'; 
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { SidebarContainerComponent } from './sidebar-container/sidebar-container
     FilterComponent,
     GallerypickerComponent,
     SidebarContainerComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
