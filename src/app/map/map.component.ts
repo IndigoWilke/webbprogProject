@@ -18,7 +18,9 @@ export class MapComponent implements OnInit, OnChanges {
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
    })
   };
-  @Input() places: { name: string; lat: number; lng: number; description: string }[] = [];
+ // @Input() places: { name: string; lat: number; lng: number; description: string }[] = [];
+  @Input() places: { name: string; lat: number; lng: number; galleryType: string; open: number; closing: number;
+  genre: string; servesFood: boolean; servesAlcoholicBev: boolean }[] = [];
 
   private map!: L.Map;
 
@@ -58,7 +60,8 @@ export class MapComponent implements OnInit, OnChanges {
         // Create a custom popup content
         const popupContent = `
           <h3>${place.name}</h3>
-          <p>${place.description}</p>
+          <p>Beskrivning: ${place.genre}</p>
+          <p>Öppettider: ${place.open} - ${place.closing}</p>
           <img src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png" alt="Image" width="100">
         `;
     
