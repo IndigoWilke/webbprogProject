@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 import './map.component.css';
+import { FilterService } from '../filter.service'; 
+import { StateService } from '../state.service';
 
 
 @Component({
@@ -10,6 +12,12 @@ import './map.component.css';
 })
 
 export class MapComponent implements OnInit, OnChanges {
+  galleryItems: any[] = [];
+  selectedGalleries: any[] = [];
+  markers: L.Marker[] = [];
+
+  constructor(private filterService: FilterService, private stateService: StateService) {}
+
   icon = {
     icon: L.icon({
       iconSize: [ 25, 41 ],
@@ -26,6 +34,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.initializeMap();
+    this.subscribeToSelectedGalleries();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -34,17 +43,32 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
+  subscribeToSelectedGalleries() {
+    this.stateService.selectedGalleries$().subscribe(selectedGalleries => {
+      this.selectedGalleries = selectedGalleries;
+      this.updateMarkers();
+    });
+  }
+
   private initializeMap(): void {
     this.map = L.map('map').setView([55.61, 13.02], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-
+    this.resetState();
     this.updateMarkers();
   }
 
+  resetState() {
+    const initialState = this.stateService.getCurrentState();
+    this.galleryItems = initialState.galleryItems;
+    this.selectedGalleries = initialState.selectedGalleries;
+    
+  }
+
   private updateMarkers(): void {
+
     // Clear existing markers
     if (this.map) {
       this.map.eachLayer(layer => {
@@ -54,8 +78,10 @@ export class MapComponent implements OnInit, OnChanges {
       });
 
       // Add markers based on the updated places array
-      this.places.forEach(place => {
+      this.selectedGalleries.forEach(place => {
         const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map);
+/*       this.places.forEach(place => {
+        const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map); */
       
         // Create a custom popup content
         const popupContent = `
@@ -75,5 +101,7 @@ export class MapComponent implements OnInit, OnChanges {
       });
     }
   }
+
+  
 
 }

@@ -12,7 +12,7 @@ import { take } from 'rxjs';
 export class GallerypickerComponent implements OnInit {
   galleryItems: any[] = [];
   showChecklist: boolean = false;
-  selectedGalleries: string[] = [];
+  selectedGalleries: any[] = [];
   constructor(private filterService: FilterService, private stateService: StateService) {}
 
   ngOnInit() {
@@ -21,7 +21,15 @@ export class GallerypickerComponent implements OnInit {
         this.resetState();
         this.galleryItems = data.map(item => {
           return {
-            ...item,
+            name: item.name,
+            lat: item.coordinates[0],
+            lng: item.coordinates[1],
+            galleryType: item.galleryType,
+            open: item.openingHours['öppnar'],
+            closing: item.openingHours['stänger'],
+            genre: item.genre,
+            servesFood: item.servesFood,
+            servesAlcoholicBev: item.servesAlcoholicBev,
             checked: this.selectedGalleries.includes(item.name)
           };
         });

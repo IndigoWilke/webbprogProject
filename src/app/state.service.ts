@@ -11,7 +11,7 @@ export class StateService {
   };
 
   private currentState: any = { ...this.initialState };
-  private selectedGalleriesSubject = new BehaviorSubject<string[]>([]);
+  private selectedGalleriesSubject = new BehaviorSubject<any[]>([]);
 
   constructor() {
     this.selectedGalleriesSubject.next(this.initialState.selectedGalleries);
@@ -25,13 +25,13 @@ export class StateService {
     return { ...this.currentState };
   }
 
-  updateSelectedGalleries(selectedGalleries: string[]) {
+  updateSelectedGalleries(selectedGalleries: any[]) {
     this.currentState.selectedGalleries = selectedGalleries;
     this.selectedGalleriesSubject.next(selectedGalleries);
   }
 
   // Create an observable for selectedGalleries
-  selectedGalleries$(): Observable<string[]> {
+  selectedGalleries$(): Observable<any[]> {
     return this.selectedGalleriesSubject.asObservable();
   }
 }
