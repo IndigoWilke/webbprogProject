@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterService } from '../filter.service'; 
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-gallery-picker',
@@ -10,20 +11,28 @@ import { FilterService } from '../filter.service';
 export class GallerypickerComponent implements OnInit {
   galleryItems: any[] = [];
   showChecklist: boolean = false;
-  selectedGalleries: string[] = []; // Array to hold selected galleries
-
-  constructor(private filterService: FilterService) {}
+  selectedGalleries: string[] = [];
+  constructor(private filterService: FilterService, private stateService: StateService) {}
 
   ngOnInit() {
-    this.filterService.filteredExhibitors$.subscribe((data) => {
+    this.filterService.filteredExhibitors$
+      .subscribe((data) => {
+      this.resetState();
       this.galleryItems = data.map(item => {
         return {
           ...item,
           checked: this.selectedGalleries.includes(item.name)
         };
       });
+      console.log('this.selectedGalleris: ', this.selectedGalleries);
       console.log('this.galleryItems: ', this.galleryItems);
     });
+  }
+
+  resetState() {
+    const initialState = this.stateService.getCurrentState();
+    this.galleryItems = initialState.galleryItems;
+    this.selectedGalleries = initialState.selectedGalleries;
   }
 
   toggleChecklist() {
@@ -31,13 +40,9 @@ export class GallerypickerComponent implements OnInit {
   }
 
   submitForm() {
-    const newlySelectedGalleryNames = this.galleryItems
+    this.selectedGalleries = this.galleryItems
       .filter(gallery => gallery.checked)
       .map(gallery => gallery.name);
-  
-    const uniqueNewlySelectedGalleryNames = newlySelectedGalleryNames.filter(name => !this.selectedGalleries.includes(name));
-  
-    this.selectedGalleries = [...this.selectedGalleries, ...uniqueNewlySelectedGalleryNames];
   
     console.log('Selected Galleries:', this.selectedGalleries);
   }

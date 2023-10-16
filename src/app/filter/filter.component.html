@@ -15,26 +15,26 @@
             <mat-form-field appearance="fill">
               <mat-label>Opening Time</mat-label>
               <input matInput
+                type="number"
                 [formControl]="openingTimeControl"
                 name="openingTime"
-                placeholder="Opening Time (hh:mm)"
-                type="text"
+                placeholder="Opening Time (1-24)"
               />
-              <mat-error *ngIf="openingTimeControl.hasError('invalidTimeFormat') && openingTimeControl.value">
-                Please enter a valid opening time in 'hh:mm' format
+              <mat-error *ngIf="openingTimeControl.hasError('invalidHourRange') && openingTimeControl.value">
+                Please enter a valid opening time between 1 and 24.
               </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Closing Time</mat-label>
               <input matInput
+                type="number"
                 [formControl]="closingTimeControl"
                 name="closingTime"
-                placeholder="Closing Time (hh:mm)"
-                type="text"
+                placeholder="Closing Time (1-24)"
               />
-              <mat-error *ngIf="closingTimeControl.hasError('invalidTimeFormat') && closingTimeControl.value">
-                Please enter a valid closing time in 'hh:mm' format
+              <mat-error *ngIf="closingTimeControl.hasError('invalidHourRange') && closingTimeControl.value">
+                Please enter a valid closing time between 1 and 24.
               </mat-error>
             </mat-form-field>
           </ng-container>
