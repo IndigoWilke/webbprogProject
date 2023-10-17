@@ -30,7 +30,6 @@ export class StateService {
     this.selectedGalleriesSubject.next(selectedGalleries);
   }
 
-  // Create an observable for selectedGalleries
   selectedGalleries$(): Observable<any[]> {
     return this.selectedGalleriesSubject.asObservable();
   }

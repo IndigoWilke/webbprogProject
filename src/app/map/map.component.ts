@@ -47,6 +47,7 @@ export class MapComponent implements OnInit, OnChanges {
     this.stateService.selectedGalleries$().subscribe(selectedGalleries => {
       this.selectedGalleries = selectedGalleries;
       this.updateMarkers();
+      console.log('map selectedGalleries: ', this.selectedGalleries)
     });
   }
 
@@ -79,7 +80,7 @@ export class MapComponent implements OnInit, OnChanges {
 
       // Add markers based on the updated places array
       this.selectedGalleries.forEach(place => {
-        const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map);
+        const marker = L.marker([place.coordinates[0], place.coordinates[1]], this.icon).addTo(this.map);
 /*       this.places.forEach(place => {
         const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map); */
         const isFoodServing = place.servesFood;

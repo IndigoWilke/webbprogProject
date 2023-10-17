@@ -21,20 +21,11 @@ export class GallerypickerComponent implements OnInit {
         this.resetState();
         this.galleryItems = data.map(item => {
           return {
-            name: item.name,
-            lat: item.coordinates[0],
-            lng: item.coordinates[1],
-            galleryType: item.galleryType,
-            open: item.openingHours['öppnar'],
-            closing: item.openingHours['stänger'],
-            genre: item.genre,
-            servesFood: item.servesFood,
-            servesAlcoholicBev: item.servesAlcoholicBev,
+            ...item,
             checked: this.selectedGalleries.includes(item.name)
           };
         });
-        console.log('this.selectedGalleris: ', this.selectedGalleries);
-        console.log('this.galleryItems: ', this.galleryItems);
+        this.stateService.updateSelectedGalleries(this.selectedGalleries);
       });
     }
 
@@ -54,7 +45,6 @@ export class GallerypickerComponent implements OnInit {
       gallery.checked = true;
     });
     this.selectedGalleries = this.galleryItems.filter((gallery) => gallery.checked);
-    console.log('Selected Galleries:', this.selectedGalleries);
     this.stateService.updateSelectedGalleries(this.selectedGalleries);
   }
   
@@ -63,13 +53,11 @@ export class GallerypickerComponent implements OnInit {
       gallery.checked = false;
     });
     this.selectedGalleries = this.galleryItems.filter((gallery) => gallery.checked);
-    console.log('Selected Galleries:', this.selectedGalleries);
     this.stateService.updateSelectedGalleries(this.selectedGalleries);
   }
 
   displayGalleries() {
     this.selectedGalleries = this.galleryItems.filter((gallery) => gallery.checked);
-    console.log('Selected Galleries:', this.selectedGalleries);
     this.stateService.updateSelectedGalleries(this.selectedGalleries);
   } 
 }

@@ -111,9 +111,6 @@ export class FilterComponent {
   
     this.filterService.setFilteredExhibitors(filteredExhibitors);
     this.stateService.setInitialState();
-    console.log('Filtered Exhibitors:', filteredExhibitors);
-    console.log('Opening Time:', openingHour);
-    console.log('Closing Time:', closingHour);
   }
   
   filterExhibitorsByFoodService(foodServiceChecked: boolean): any[] {
