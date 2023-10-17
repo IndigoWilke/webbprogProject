@@ -78,11 +78,8 @@ export class MapComponent implements OnInit, OnChanges {
         }
       });
 
-      // Add markers based on the updated places array
       this.selectedGalleries.forEach(place => {
         const marker = L.marker([place.coordinates[0], place.coordinates[1]], this.icon).addTo(this.map);
-/*       this.places.forEach(place => {
-        const marker = L.marker([place.lat, place.lng], this.icon).addTo(this.map); */
         const isFoodServing = place.servesFood;
         const isAlcoholServing = place.servesAlcoholicBev;
         
@@ -100,7 +97,7 @@ export class MapComponent implements OnInit, OnChanges {
           <p>Gallerityp: ${place.galleryType}</p>
           <p>Beskrivning: ${place.genre}</p>
           ${servingInfo ? `<p> ${servingInfo}</p>` : ''}
-          <h4>Öppettider: ${place.open} - ${place.closing}</h4>
+          <h4>Öppettider: ${place.openingHours['öppnar']} - ${place.openingHours['stänger']}</h4>
           `;
     
         // Bind the custom popup to the marker
