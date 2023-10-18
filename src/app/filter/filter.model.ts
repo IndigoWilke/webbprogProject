@@ -5,5 +5,5 @@ export interface FilterOption {
 
 export interface FilterCategory {
   name: string;
-  options?: FilterOption[]; // Make options property optional
+  options?: FilterOption[];
 }

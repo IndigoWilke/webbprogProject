@@ -1,25 +1,25 @@
 .gallery-checkbox-container {
-  max-height: 400px; /* Adjust the height as needed */
+  max-height: 400px;
   overflow-y: auto;
 }
 
 .button-container {
   display: flex;
-  gap: 10px; /* Adjust the value to control the spacing */
+  gap: 10px;
 }
 
 /* Style the buttons */
 .action-button {
-  background-color: #1976D2; /* Change to your desired background color */
-  color: white; /* Text color */
+  background-color: #1976D2; 
+  color: white;
   border: none;
-  padding: 8px 16px; /* Adjust padding to control button size */
-  border-radius: 4px; /* Rounded corners */
+  padding: 8px 16px;
+  border-radius: 4px; 
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .action-button:hover {
-  background-color: #1565C0; /* Change to a slightly different shade on hover */
+  background-color: #1565C0;
 }
 

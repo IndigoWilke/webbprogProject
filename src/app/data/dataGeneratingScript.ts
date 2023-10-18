@@ -96,9 +96,4 @@ popUp.forEach((utställare: any[]) => {
 });
 
 const allaUtställare = galleriUtställare.concat(popUpUtställare)
-console.log(allaUtställare);
-//const filename = './src/app/data/data.ts'  //Don't write to file, since we want to create a variabl and export it. Just console.log and copy-paste for now.
-//fs.writeFileSync(filename, jsonizedData, 'utf-8'); //See line above.
-//^Doesn't work since we are in Angular probably. Need to move to server side but im too tired now, will just manually copy over the data in the meantime.
-
 export default allaUtställare;

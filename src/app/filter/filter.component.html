@@ -39,7 +39,6 @@
             </mat-form-field>
           </ng-container>
           <ng-container *ngIf="category.name !== 'Opening Hours'">
-            <!-- Filter checkboxes here -->
             <mat-checkbox
               *ngFor="let option of category.options"
               [(ngModel)]="option.checked"

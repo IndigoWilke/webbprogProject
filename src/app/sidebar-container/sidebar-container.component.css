@@ -19,6 +19,6 @@
   position: absolute;
   width: 350px;
   top: 0;
-  left: 67%; /* Adjust this value as needed to separate the two components */
+  left: 67%;
   transform: translateX(-50%);
 }

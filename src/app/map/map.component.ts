@@ -26,7 +26,6 @@ export class MapComponent implements OnInit, OnChanges {
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
    })
   };
- // @Input() places: { name: string; lat: number; lng: number; description: string }[] = [];
   @Input() places: { name: string; lat: number; lng: number; galleryType: string; open: number; closing: number;
   genre: string; servesFood: boolean; servesAlcoholicBev: boolean }[] = [];
 
@@ -47,7 +46,6 @@ export class MapComponent implements OnInit, OnChanges {
     this.stateService.selectedGalleries$().subscribe(selectedGalleries => {
       this.selectedGalleries = selectedGalleries;
       this.updateMarkers();
-      console.log('map selectedGalleries: ', this.selectedGalleries)
     });
   }
 
@@ -91,7 +89,6 @@ export class MapComponent implements OnInit, OnChanges {
         } else if (isAlcoholServing) {
           servingInfo = 'Alkoholservering';
         }
-        // Create a custom popup content
         const popupContent = `
           <h2>${place.name}</h2>
           <p>Gallerityp: ${place.galleryType}</p>
@@ -100,10 +97,8 @@ export class MapComponent implements OnInit, OnChanges {
           <h4>Öppettider: ${place.openingHours['öppnar']} - ${place.openingHours['stänger']}</h4>
           `;
     
-        // Bind the custom popup to the marker
         marker.bindPopup(popupContent);
     
-        // Open the popup when the marker is clicked
         marker.on('click', () => {
           marker.openPopup();
         });
