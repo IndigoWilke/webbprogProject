@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 import './map.component.css';
-import { FilterService } from '../filter.service'; 
+import { FilterService } from '../filter.service';
 import { StateService } from '../state.service';
 
 
@@ -16,18 +16,20 @@ export class MapComponent implements OnInit, OnChanges {
   selectedGalleries: any[] = [];
   markers: L.Marker[] = [];
 
-  constructor(private filterService: FilterService, private stateService: StateService) {}
+  constructor(private filterService: FilterService, private stateService: StateService) { }
 
   icon = {
     icon: L.icon({
-      iconSize: [ 25, 41 ],
-      iconAnchor: [ 13, 0 ],
+      iconSize: [25, 41],
+      iconAnchor: [13, 0],
       iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png'
-   })
+    })
   };
-  @Input() places: { name: string; lat: number; lng: number; galleryType: string; open: number; closing: number;
-  genre: string; servesFood: boolean; servesAlcoholicBev: boolean }[] = [];
+  @Input() places: {
+    name: string; lat: number; lng: number; galleryType: string; open: number; closing: number;
+    genre: string; servesFood: boolean; servesAlcoholicBev: boolean
+  }[] = [];
 
   private map!: L.Map;
 
@@ -50,7 +52,14 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private initializeMap(): void {
-    this.map = L.map('map').setView([55.61, 13.02], 13);
+    this.map = L.map('map', {
+
+      zoomControl: false
+    }).setView([55.61, 13.02], 13);
+    this.map.setMinZoom(11);
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(this.map);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -63,7 +72,7 @@ export class MapComponent implements OnInit, OnChanges {
     const initialState = this.stateService.getCurrentState();
     this.galleryItems = initialState.galleryItems;
     this.selectedGalleries = initialState.selectedGalleries;
-    
+
   }
 
   private updateMarkers(): void {
@@ -80,7 +89,7 @@ export class MapComponent implements OnInit, OnChanges {
         const marker = L.marker([place.coordinates[0], place.coordinates[1]], this.icon).addTo(this.map);
         const isFoodServing = place.servesFood;
         const isAlcoholServing = place.servesAlcoholicBev;
-        
+
         let servingInfo = '';
         if (isFoodServing && isAlcoholServing) {
           servingInfo = 'Mat- och alkoholservering';
@@ -96,9 +105,9 @@ export class MapComponent implements OnInit, OnChanges {
           ${servingInfo ? `<p> ${servingInfo}</p>` : ''}
           <h4>Öppettider: ${place.openingHours['öppnar']} - ${place.openingHours['stänger']}</h4>
           `;
-    
+
         marker.bindPopup(popupContent);
-    
+
         marker.on('click', () => {
           marker.openPopup();
         });
@@ -106,6 +115,6 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
-  
+
 
 }
