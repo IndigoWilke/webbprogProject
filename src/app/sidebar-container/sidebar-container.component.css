@@ -2,7 +2,8 @@
   display: flex;
 }
 
-.filter, .gallery-picker {
+.filter,
+.gallery-picker {
   flex: 1;
   z-index: 2;
   background-color: rgba(255, 255, 255, 0.8);
@@ -11,14 +12,14 @@
 
 .filter {
   position: absolute;
+  width: 400px;
   top: 0;
-  left: 4%;
+  left: 0;
 }
 
 .gallery-picker {
   position: absolute;
   width: 350px;
   top: 0;
-  left: 67%;
-  transform: translateX(-50%);
+  right: 0;
 }
